@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -145,42 +148,42 @@ public class Main {
      * @author Anuvrat Patil
      */
     public void printInstructions(Maze g) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("draw_instructions.txt"))) {
+            writer.write("reset\n");
+            writer.write("canvassize " + (g.getCols() * 40 + 80) + ", " + (g.getRows() * 40 + 80) + "\n");
+            writer.write("pd\n");
 
-        System.out.println("\n\nreset");
-        System.out.println("canvassize " + (g.getCols() * 40 + 80) + ", " + (g.getRows() * 40 + 80));
-        System.out.println("pd");
+            for (int i = 0; i < g.getRows(); i++) {
+                for (int j = 0; j < g.getCols(); j++) {
+                    writer.write("go " + (j * 40 + 40) + ", " + (i * 40 + 40) + "\n");
+                    writer.write("dir 90\n");
+                    if (g.getCell(i, j).getUp()) writer.write("pu\n");
+                    writer.write("fw 40\n");
+                    if (g.getCell(i, j).getUp()) writer.write("pd\n");
 
-        for (int i = 0; i < g.getRows(); i++) {
-            for (int j = 0; j < g.getCols(); j++) {
+                    writer.write("dir 180\n");
+                    if (g.getCell(i, j).getRight()) writer.write("pu\n");
+                    writer.write("fw 40\n");
+                    if (g.getCell(i, j).getRight()) writer.write("pd\n");
 
-                System.out.println("go " + (j*40 + 40) +  ", " + (i*40 + 40));
+                    writer.write("dir 270\n");
+                    if (g.getCell(i, j).getDown()) writer.write("pu\n");
+                    writer.write("fw 40\n");
+                    if (g.getCell(i, j).getDown()) writer.write("pd\n");
 
-                System.out.println("dir 90");
-                if (g.getCell(i,j).getUp()) System.out.println("pu");
-                System.out.println("fw 40");
-                if (g.getCell(i,j).getUp()) System.out.println("pd");
-
-                System.out.println("dir 180");
-                if (g.getCell(i,j).getRight()) System.out.println("pu");
-                System.out.println("fw 40");
-                if (g.getCell(i,j).getRight()) System.out.println("pd");
-
-                System.out.println("dir 270");
-                if (g.getCell(i, j).getDown()) System.out.println("pu");
-                System.out.println("fw 40");
-                if (g.getCell(i, j).getDown()) System.out.println("pd");
-
-                System.out.println("dir 0");
-                if (g.getCell(i, j).getLeft()) System.out.println("pu");
-                System.out.println("fw 40");
-                if (g.getCell(i, j).getLeft()) System.out.println("pd");
-
+                    writer.write("dir 0\n");
+                    if (g.getCell(i, j).getLeft()) writer.write("pu\n");
+                    writer.write("fw 40\n");
+                    if (g.getCell(i, j).getLeft()) writer.write("pd\n");
+                }
             }
+
+            writer.write("go 20, " + (g.getStart() * 40 + 60) + "\n");
+            writer.write("dir 90");
+
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
         }
-
-        System.out.println("go 20, " + (g.getStart()*40 + 60));
-        System.out.println("dir 90");
-
     }
 
 
@@ -230,8 +233,8 @@ public class Main {
 
         long endTime = System.nanoTime();
         long duration = endTime - startTime;
-        System.out.println("runtime = " + duration / 1000000 + "ms");
-        System.out.println("to create the cell grid, generate a perfect maze on it, and print instructions to draw it on k-turtle.");
+        System.out.print("runtime = " + duration / 1000000 + "ms; to create the cell grid, " +
+                "generate a perfect maze on it, and print instructions to draw it using k-turtle.");
     }
 
 }
