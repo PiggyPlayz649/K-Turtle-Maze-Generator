@@ -195,16 +195,32 @@ public class Main {
      * <p>
      * - prints K-turtle instructions to print said maze
      *
-     * @param args convention; unused
+     * @param args command line arguments
      * @author Anuvrat Patil
      */
     public static void main(String[] args) {
-        System.out.print("Enter row count: ");
-        int r = sc.nextInt();
-        System.out.print("Enter Column Count: ");
-        int c = sc.nextInt();
-
+      
         long startTime = System.nanoTime();
+      
+        int r = 0, c = 0;
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                System.out.print("Enter row count: ");
+                r = Integer.parseInt(sc.nextLine());
+                System.out.print("Enter column count: ");
+                c = Integer.parseInt(sc.nextLine());
+
+                if (r > 0 && c > 0) {
+                    validInput = true;
+                } else {
+                    System.out.println("Error: Row and column counts must be positive integers.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Please enter a valid number.");
+            }
+        }
 
         Maze game = new Maze(r, c, (int) (Math.random() * r), (int) (Math.random() * r));
         Main ob = new Main();
