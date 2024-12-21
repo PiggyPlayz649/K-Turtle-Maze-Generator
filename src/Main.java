@@ -44,11 +44,6 @@ public class Main {
 
         while (g.getCell(r, c).getNeighboursOpened() != 4) {
 
-            // TODO:
-            //  the following can be highly optimized to
-            //  not repeat already opened borders
-            //  but im too lazy to implement that
-
             int toTest = (int) (Math.random() * 4) + 1;
             final int testUp = 1, testDown = 2, testLeft = 3, testRight = 4;
 
@@ -208,11 +203,19 @@ public class Main {
         int r = sc.nextInt();
         System.out.print("Enter Column Count: ");
         int c = sc.nextInt();
+
+        long startTime = System.nanoTime();
+
         Maze game = new Maze(r, c, (int) (Math.random() * r), (int) (Math.random() * r));
         Main ob = new Main();
         ob.depthFirstSearch(game, (int) (Math.random() * r), (int) (Math.random() * c));
         ob.setStartAndStop(game);
         ob.printInstructions(game);
+
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+        System.out.println("runtime = " + duration / 1000000 + "ms");
+        System.out.println("to create the cell grid, generate a perfect maze on it, and print instructions to draw it on k-turtle.");
     }
 
 }
