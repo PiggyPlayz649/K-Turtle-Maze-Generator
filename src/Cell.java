@@ -8,10 +8,7 @@ public class Cell {
 
 
     private boolean open;
-    private boolean up;
-    private boolean down;
-    private boolean left;
-    private boolean right;
+    private boolean up, down, left, right;
     private int neighboursOpened;
 
 
