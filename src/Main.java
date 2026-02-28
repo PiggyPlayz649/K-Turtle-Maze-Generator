@@ -135,7 +135,7 @@ public class Main {
      */
     public void setStartAndStop(Maze g) {
         g.getCell(g.getStart(), 0).setLeft(true);
-        g.getCell(g.getStart(), g.getCols()-1).setRight(true);
+        g.getCell(g.getStop(), g.getCols()-1).setRight(true);
     }
 
 
